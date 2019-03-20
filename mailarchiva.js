@@ -46,7 +46,7 @@ class Mailarchiva {
 			};
 		} catch(err) {
 			console.error(err);
-			return Promise.reject({ error: "Mailarchiva error", code: err.code });
+			return Promise.reject({ error: "Mailarchiva error", code: err.code, data: err.data });
 		};
 	};
 	
@@ -109,7 +109,7 @@ class Mailarchiva {
 			return result.data;
 		} catch(err) {
 			console.error(err);
-			return Promise.reject({ error: "Mailarchiva error", code: err.code });
+			return Promise.reject({ error: "Mailarchiva error", code: err.code, data: err.data });
 		}
 	};
 }
