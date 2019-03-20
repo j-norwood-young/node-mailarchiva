@@ -15,7 +15,7 @@ class Mailarchiva {
 		if (!config.baseURL) throw("config.baseURL required");
 		if (!config.headers || !config.headers.Authorization) throw("config.headers.Authorization required");
 		this.config = config;
-		this.mailarchiva = axios.create(this.config.mailarchiva);
+		this.mailarchiva = axios.create(this.config);
 	}
 
 	async search(query, page, limit)  {
@@ -45,8 +45,8 @@ class Mailarchiva {
 				})
 			};
 		} catch(err) {
-			console.error(err);
-			return Promise.reject({ error: "Mailarchiva error", code: err.code, data: err.data });
+			console.error(err.data);
+			return Promise.reject({ error: "Mailarchiva error", code: err.code });
 		};
 	};
 	
@@ -108,7 +108,7 @@ class Mailarchiva {
 			var result = await this.mailarchiva.get(url, { httpsAgent: agent });
 			return result.data;
 		} catch(err) {
-			console.error(err);
+			console.error(err.data);
 			return Promise.reject({ error: "Mailarchiva error", code: err.code, data: err.data });
 		}
 	};
