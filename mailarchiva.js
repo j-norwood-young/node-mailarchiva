@@ -19,8 +19,8 @@ class Mailarchiva {
 	}
 
 	async search(query, page, limit)  {
-		const page = page || 1;
-		const limit = limit || 10;
+		page = page || 1;
+		limit = limit || 10;
 		const qs = {
 			query,
 			page,
