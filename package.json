@@ -1,6 +1,6 @@
 {
   "name": "node-mailarchiva",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A library for interacting with Mailarchiva Email Archiver",
   "main": "mailarchiva.js",
   "scripts": {
@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/j-norwood-young/node-mailarchiva/issues"
   },
-  "homepage": "https://github.com/j-norwood-young/node-mailarchiva#readme"
+  "homepage": "https://github.com/j-norwood-young/node-mailarchiva#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "fs": "0.0.1-security",
+    "mkdirp-promise": "^5.0.1",
+    "querystring": "^0.2.0"
+  }
 }
