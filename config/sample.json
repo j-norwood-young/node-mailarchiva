@@ -1,0 +1,8 @@
+{
+    "mailarchiva": {
+        "baseURL": "https://archiva.yoururl.com",
+        "headers": {
+            "Authorization": "ABC123BLAHBLAH"
+        }
+    }
+}
