@@ -28,7 +28,7 @@ router.get("/search/:email", async(req, res) => {
         res.send({ emails });
     } catch(err) {
         console.error(err);
-        res.send(500, err);
+        res.status(500).send(err);
     }
 });
 
@@ -39,7 +39,7 @@ router.get("/single/:volid/:id", async (req, res) => {
         res.send({ body, attachments });
     } catch(err) {
         console.error(err);
-        res.send(500, err);
+        res.status(500).send(err);
     }
 });
 
@@ -50,7 +50,7 @@ router.get("/attachment/:volid/:id/:filename", async (req, res) => {
         res.download(file);
     } catch(err) {
         console.error(err);
-        res.send(500, err);
+        res.status(500).send(err);
     }
 });
 
