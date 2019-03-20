@@ -52,7 +52,7 @@ class Mailarchiva {
 	
 	findByEmail(email, page = 0, limit = 20) {
 		var s = `all:"${ email }" AND NOT anyaddress:(dir@open.co.za) AND NOT subject:("*P")`;
-		return search(s, page, limit);
+		return this.search(s, page, limit);
 	}
 	
 	async attachments(volid, id) {
@@ -87,7 +87,7 @@ class Mailarchiva {
 			var url = `/api/v1/blobs/${ volid }/${ id }?${ querystring.stringify({ xPathQuery: `attachmentlist[filename='${ filename }']/download` }) }`;
 			var dir = `/tmp/${ volid }/${ id }`;
 			var file = path.resolve(dir, filename);
-			if (await fsExists(file)) return file;
+			if (await this.fsExists(file)) return file;
 			await mkdirp(dir);
 			var response = await this.mailarchiva({ method: "GET", url, responseType: 'stream' });
 			response.data.pipe(fs.createWriteStream(file));
