@@ -89,7 +89,7 @@ class Mailarchiva {
 			var file = path.resolve(dir, filename);
 			if (await this.fsExists(file)) return file;
 			await mkdirp(dir);
-			var response = await this.mailarchiva({ method: "GET", url, responseType: 'stream' });
+			var response = await this.mailarchiva({ method: "GET", url, responseType: 'stream', httpsAgent: agent });
 			response.data.pipe(fs.createWriteStream(file));
 			return new Promise((resolve, reject) => {
 				response.data.on('end', () => { return resolve(file) });
