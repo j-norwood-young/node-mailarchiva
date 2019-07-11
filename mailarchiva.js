@@ -41,6 +41,8 @@ class Mailarchiva {
 					mailObj.fieldValues.forEach(fieldValue => {
 						response[fieldValue.field] = fieldValue.value;
 					});
+					response.volid = mailObj.blobId.volumeId;
+					response.uniqueid = mailObj.blobId.uniqueId;
 					return response;
 				})
 			};
