@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/j-norwood-young/node-mailarchiva#readme",
   "dependencies": {
-    "axios": "^0.21.4",
+    "axios": "^0.21.2",
     "fs": "0.0.1-security",
     "mkdirp-promise": "^5.0.1",
     "querystring": "^0.2.0"
