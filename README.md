@@ -57,6 +57,20 @@ router.get("/attachment/:volid/:id/:filename", async (req, res) => {
 module.exports = router;
 ```
 
+## Excluding certain emails or subjects
+
+```
+router.get("/search/:email", async(req, res) => {
+    try {
+        var emails = await mailarchiva.findByEmail(req.params.email, 0, 20, ["@workspaceman.nl", "joe@workspaceman.nl"], ["A subject with a wildcard*" "A specific subject"]);
+        res.send({ emails });
+    } catch(err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
+```
+
 ## License
 
 Copyright 2019 Jason Norwood-Young
