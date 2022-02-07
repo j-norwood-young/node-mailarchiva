@@ -6,7 +6,8 @@ const mailarchiva = new Mailarchiva({
     "baseURL": "https://archiva.yoururl.com",
     "headers": {
         "Authorization": "ABC123BLAHBLAH"
-    }
+    },
+    "version": "v1" // or v2
 });
 
 router.get("/search/:email", async(req, res) => {

@@ -1,5 +1,4 @@
 const axios = require("axios");
-const querystring = require('querystring');
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp-promise");
@@ -16,6 +15,7 @@ class Mailarchiva {
 		if (!config.headers || !config.headers.Authorization) throw("config.headers.Authorization required");
 		this.config = config;
 		this.mailarchiva = axios.create(this.config);
+		this.version = config.version || "v1";
 	}
 
 	async search(query, page, limit)  {
@@ -26,7 +26,7 @@ class Mailarchiva {
 			page,
 			pageSize: limit
 		}
-		const url = `/api/v1/blobs?${ new URLSearchParams(qs).toString() }`;
+		const url = `/api/${this.version}/blobs?${ new URLSearchParams(qs).toString() }`;
 		this.mailarchiva.defaults.headers['Accept'] = "application/json";
 		this.mailarchiva.defaults.headers.common['Accept'] = "application/json";
 		try {
@@ -67,7 +67,7 @@ class Mailarchiva {
 	async attachments(volid, id) {
 		try {
 			this.mailarchiva.defaults.headers['Accept'] = "application/json";
-			var url = `/api/v1/blobs/${ volid }/${ id }?${ new URLSearchParams({ xPathQuery: "attachname" }).toString() }`;
+			var url = `/api/${this.version}/blobs/${ volid }/${ id }?${ new URLSearchParams({ xPathQuery: "attachname" }).toString() }`;
 			var result = await this.mailarchiva.get(url, { httpsAgent: agent });
 			return result.data;
 		} catch(err) {
@@ -93,7 +93,7 @@ class Mailarchiva {
 	async attachment(volid, id, filename) {
 		try {
 			this.mailarchiva.defaults.headers['Accept'] = "application/octet-stream";
-			var url = `/api/v1/blobs/${ volid }/${ id }?${ new URLSearchParams({ xPathQuery: `attachmentlist[filename='${ filename }']/download` }).toString() }`;
+			var url = `/api/${this.version}/blobs/${ volid }/${ id }?${ new URLSearchParams({ xPathQuery: `attachmentlist[filename='${ filename }']/download` }).toString() }`;
 			var dir = `/tmp/${ volid }/${ id }`;
 			var file = path.resolve(dir, filename);
 			if (await this.fsExists(file)) return file;
@@ -113,7 +113,7 @@ class Mailarchiva {
 	async get(volid, id) {
 		try {
 			this.mailarchiva.defaults.headers['Accept'] = "application/octet-stream";
-			var url = `/api/v1/blobs/${ volid }/${ id }?${ new URLSearchParams({ xPathQuery: "view" }).toString() }`;
+			var url = `/api/${this.version}/blobs/${ volid }/${ id }?${ new URLSearchParams({ xPathQuery: "view" }).toString() }`;
 			var result = await this.mailarchiva.get(url, { httpsAgent: agent });
 			return result.data;
 		} catch(err) {
