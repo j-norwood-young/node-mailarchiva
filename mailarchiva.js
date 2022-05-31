@@ -31,18 +31,21 @@ class Mailarchiva {
 		this.mailarchiva.defaults.headers.common['Accept'] = "application/json";
 		try {
 			const result = await this.mailarchiva.get(url, { httpsAgent: agent });
+			const searchResults = result.data.searchResults || result.data.results;
 			return {
 				hits: result.data.totalHits,
 				page,
 				limit,
 				pageCount: Math.ceil(result.data.totalHits / limit),
-				data: result.data.searchResults.map(mailObj => {
+				data: searchResults.map(mailObj => {
 					let response = {};
-					mailObj.fieldValues.forEach(fieldValue => {
+					const fieldValues = mailObj.fieldValues || mailObj.list;
+					fieldValues.forEach(fieldValue => {
 						response[fieldValue.field] = fieldValue.value;
 					});
-					response.volid = mailObj.blobId.volumeId;
-					response.uniqueid = mailObj.blobId.uniqueId;
+					const blobId = mailObj.blobId || mailObj.blobid;
+					response.volid = blobId.volumeId || blobId.volumeid;
+					response.uniqueid = blobId.uniqueId || blobId.uniqueid;
 					return response;
 				})
 			};
